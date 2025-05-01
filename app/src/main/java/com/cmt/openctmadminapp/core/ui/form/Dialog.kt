@@ -12,9 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
@@ -24,12 +29,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.cmt.openctmadminapp.R
 import com.cmt.openctmadminapp.core.ui.shared.buttonNavigate.ButtonConfirmReport
+import com.cmt.openctmadminapp.core.ui.shared.buttonNavigate.MyButton
 import com.cmt.openctmadminapp.ui.theme.LargeTypography
 import com.cmt.openctmadminapp.ui.theme.MediumTypography
 import com.cmt.openctmadminapp.ui.theme.NormalTypography
@@ -58,8 +65,14 @@ fun ConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit, text: Strin
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    ButtonConfirmReport(onClick = onConfirm, stringResource(id = R.string.confirm_button))
-                    ButtonConfirmReport(onClick = onDismiss, stringResource(id = R.string.reject_button))
+                    ButtonConfirmReport(
+                        onClick = onConfirm,
+                        stringResource(id = R.string.confirm_button)
+                    )
+                    ButtonConfirmReport(
+                        onClick = onDismiss,
+                        stringResource(id = R.string.reject_button)
+                    )
                 }
             }
         }
@@ -148,9 +161,20 @@ fun FormDiagnostic(
                 onNavigateToResearch()
             },
             enabled = answer1 != null && answer2 != null && answer3 != null,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.onSecondary
+            )
         ) {
-            Text(text = stringResource(id = R.string.ready))
+            Text(
+                text = stringResource(id = R.string.ready),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.secondary
+            )
+            Icon(
+                imageVector = Icons.Default.Check, contentDescription = null,
+                tint = MaterialTheme.colorScheme.secondary
+            )
         }
     }
 }
@@ -173,7 +197,11 @@ fun DiagnosticQuestion(
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(
                 selected = selectedAnswer == "Sí",
-                onClick = { onAnswerSelected("Sí") }
+                onClick = { onAnswerSelected("Sí") },
+                colors = RadioButtonDefaults.colors(
+                    unselectedColor = Color.Gray,
+                    selectedColor = Color.Black
+                )
             )
             Text(
                 text = "Sí",
@@ -182,7 +210,11 @@ fun DiagnosticQuestion(
             Spacer(modifier = Modifier.width(16.dp))
             RadioButton(
                 selected = selectedAnswer == "No",
-                onClick = { onAnswerSelected("No") }
+                onClick = { onAnswerSelected("No") },
+                colors = RadioButtonDefaults.colors(
+                    unselectedColor = Color.Gray,
+                    selectedColor = Color.Black
+                )
             )
             Text(
                 text = "No",
